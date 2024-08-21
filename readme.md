@@ -8,13 +8,12 @@ Uses whisper and ttconv to generate ttml subtitles from a video file.
 
 ## Installation
 - Install Whipser and ttconv
-- Clone the repository
+- Download the autosubs.sh script
 ```bash
-git clone git@github.com:jonathanbossenger/automated-subtitles.git
+curl -O https://github.com/jonathanbossenger/automated-subtitles/blob/main/autosubs.sh 
 ```
 - Set the permissions on the script
 ```bash
-cd automated-subtitles
 chmod +x autosubs.sh
 ```
 - Add the script to your path
