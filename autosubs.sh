@@ -17,5 +17,13 @@ for file in *; do
         # convert the .srt file to .ttml
         tt convert -i "$filename".srt -o "$filename".ttml
 
+        #remove the .mp3 file
+        rm "$filename".mp3
+
+        #remove the .srt file
+        rm "$filename".srt
     fi
 done
+
+# print some completion message
+echo "Subtitles generated."
