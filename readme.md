@@ -7,7 +7,7 @@ Uses whisper and ttconv to generate ttml subtitles from a video file.
 - [ttconv](https://github.com/sandflow/ttconv)
 
 ## Installation
-- Install Whipser and ttconv
+- Install [Whipser and ttconv](https://jonathanbossenger.com/generating-automated-subtitles-with-openais-whisper-on-ubuntu-22-04/)
 - Download the autosubs.sh script
 ```bash
 curl -O https://github.com/jonathanbossenger/automated-subtitles/blob/main/autosubs.sh 
