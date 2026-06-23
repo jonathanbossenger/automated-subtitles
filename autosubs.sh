@@ -15,7 +15,7 @@ function convert_to_subtitles() {
     fi
 
     # Generate the .srt file using the audio file
-    whisper "$audio_file" --model base --language English --output_format srt  --verbose False
+    whisper "$audio_file" --model base --language English --output_format srt --verbose False
 
     # convert the .srt file to .ttml
     tt convert -i "$filename".srt -o "$filename".ttml
@@ -38,10 +38,10 @@ if [ -n "$filename" ]; then
     echo "Subtitles generated for $filename"
 else
     ## Loop through all the supported files in the current directory
+    shopt -s nullglob
     for file in *.mp4 *.mp3 *.ogg *.wav; do
-        if [ -e "$file" ]; then
-            convert_to_subtitles "$file"
-        fi
+        convert_to_subtitles "$file"
     done
+    shopt -u nullglob
     echo "Subtitles generated for all supported files in the current directory"
 fi
