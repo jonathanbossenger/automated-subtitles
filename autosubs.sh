@@ -15,7 +15,7 @@ function convert_to_subtitles() {
     fi
 
     # Generate the .srt file using the audio file
-    whisper "$audio_file" --model base --language English --output_format srt --verbose false
+    whisper "$audio_file" --model base --language English --output_format srt --verbose False
 
     # convert the .srt file to .ttml
     tt convert -i "$filename".srt -o "$filename".ttml
