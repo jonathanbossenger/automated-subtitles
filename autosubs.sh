@@ -4,18 +4,26 @@
 function convert_to_subtitles() {
     # store the file name in a variable
     filename="${1%.*}"
+    audio_file="$1"
+    temporary_audio_file=""
 
-    # Extract the audio from the video file
-    ffmpeg -i "$1" "$filename".mp3
+    # Extract the audio from video files
+    if [[ $1 == *.mp4 ]]; then
+        temporary_audio_file="$filename".mp3
+        ffmpeg -i "$1" "$temporary_audio_file"
+        audio_file="$temporary_audio_file"
+    fi
 
-    # Generate the .srt file using the extracted audio
-    whisper "$filename".mp3 --model base --language English --output_format srt  --verbose False
+    # Generate the .srt file using the audio file
+    whisper "$audio_file" --model base --language English --output_format srt --verbose False
 
     # convert the .srt file to .ttml
     tt convert -i "$filename".srt -o "$filename".ttml
 
-    #remove the .mp3 file
-    rm "$filename".mp3
+    #remove the extracted audio file
+    if [ -n "$temporary_audio_file" ]; then
+        rm "$temporary_audio_file"
+    fi
 
     #remove the .srt file
     rm "$filename".srt
@@ -29,12 +37,12 @@ if [ -n "$filename" ]; then
     convert_to_subtitles "$filename"
     echo "Subtitles generated for $filename"
 else
-    ## Loop through all the mp4 files in the current directory
-    for file in *; do
-        # If the file has a .mp4 extension
-        if [[ $file == *.mp4 ]]; then
-            convert_to_subtitles "$file"
-        fi
+    ## Loop through all the supported files in the current directory
+    shopt -s nullglob
+    files=( *.mp4 *.mp3 *.ogg *.wav )
+    for file in "${files[@]}"; do
+        convert_to_subtitles "$file"
     done
-    echo "Subtitles generated for all the mp4 files in the current directory"
+    shopt -u nullglob
+    echo "Subtitles generated for all supported files in the current directory"
 fi
