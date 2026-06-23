@@ -39,7 +39,8 @@ if [ -n "$filename" ]; then
 else
     ## Loop through all the supported files in the current directory
     shopt -s nullglob
-    for file in *.mp4 *.mp3 *.ogg *.wav; do
+    files=( *.mp4 *.mp3 *.ogg *.wav )
+    for file in "${files[@]}"; do
         convert_to_subtitles "$file"
     done
     shopt -u nullglob
